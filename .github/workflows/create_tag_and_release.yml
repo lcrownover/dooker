@@ -1,0 +1,36 @@
+name: Build, bump tag version and release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Build project
+        run: cargo build --release --locked
+
+      - name: Bump version and push tag/create release point
+        uses: anothrNick/github-tag-action@1.39.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+        id: bump_version
+
+      - name: Upload binary to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/dooker
+          asset_name: dooker-linux-amd64
+          tag: ${{ github.ref }}
+          overwrite: true
