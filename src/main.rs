@@ -1,12 +1,12 @@
-use unicode_segmentation::UnicodeSegmentation;
 use clap::Parser;
+use unicode_segmentation::UnicodeSegmentation;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
-   /// String to dookize
-   #[clap(short, long, value_parser)]
-   sentence: String,
+    /// String to dookize
+    #[clap(short, long, value_parser)]
+    sentence: String,
 }
 
 fn dookize(s: &str) -> String {
@@ -18,7 +18,7 @@ fn dookize(s: &str) -> String {
             new_str.push_str(g)
         }
     }
-    return new_str
+    new_str
 }
 
 fn main() {
