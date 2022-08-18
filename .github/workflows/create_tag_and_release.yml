@@ -17,7 +17,7 @@ jobs:
           fetch-depth: '0'
 
       - name: Build project
-        run: cargo build --release --locked
+        run: cargo build --release
 
       - name: Bump version and push tag/create release point
         uses: anothrNick/github-tag-action@1.39.0
